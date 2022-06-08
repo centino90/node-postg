@@ -15,9 +15,9 @@ router.get('/test', async (ctx) => {
 
 router
   .post('/cards', async (ctx) => {
-    console.log('cards')
     const data = ctx.request.body;
-    const id = await insert(postgres(ctx), data.name, data.details);
+    console.log(data)
+    const id = await insert(postgres(ctx), data.name);
 
     ctx.status = 200;
     ctx.body = id[0].id;

@@ -2,7 +2,7 @@ export const schema = {
     create: [
         `CREATE TABLE cards(
             id BIGSERIAL PRIMARY KEY,
-            name TEXT
+            name TEXT            
         )`
     ],
     drop: [

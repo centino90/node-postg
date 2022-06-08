@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend:
+    build: .
+    restart:
+      always
+    ports:
+      - 8080:8080
+  database:
+    image: postgres:14.3
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: amagi
+    ports:
+      - 6666:5432
+    restart: always      

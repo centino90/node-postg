@@ -9,22 +9,18 @@ const app = new koa().use(jsonBody()).use(postgresMiddleware(schema));
 
 const router = new Router();
 
-router.get('/test', async (ctx) => {
-  console.log('test');
-});
-
 router
   .post('/cards', async (ctx) => {
     const data = ctx.request.body;
-    console.log(data)
-    const id = await insert(postgres(ctx), data.name);
+
+    const id = await insert(postgres(ctx), data.name, data.details);
 
     ctx.status = 200;
     ctx.body = id[0].id;
   })
   .put('/cards/:id', async (ctx) => {
     const data = ctx.request.body;
-    await update(postgres(ctx), data.name, ctx.params.id);
+    await update(postgres(ctx), ctx.params.id, data.name, data.details);
 
     ctx.status = 204;
   })

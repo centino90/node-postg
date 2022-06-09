@@ -1,0 +1,127 @@
+# swagger.yaml
+
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Cards App
+  license:
+    name: Proprietary
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+  - https
+
+paths:
+  /swagger.json:
+    get:
+      tags:
+        - Spec
+      operationId: retrieveSpec
+      description: Retrieve OpenAPI spec
+      responses:
+        "200":
+          description: Successful
+          schema:
+            type: object
+  /cards:
+    get:
+      operationId: retrieveAllCards
+      description: retrieving all cards
+      tags:
+        - RetrieveAllCards
+      responses:
+        "200":
+          description: Cards are retrieved
+          schema:
+            type: array        
+        "400":
+          description: Bad Request           
+        default:
+          description: Unexpected Error        
+    post:
+      operationId: createCard
+      description: Create a card
+      tags:
+        - CreateCard
+      parameters:
+        - in: body
+          name: card
+          required: true
+          schema:
+            $ref: "#/definitions/CardBase"
+      responses:
+        "200":
+          description: Card is Created
+          schema:
+            type: object
+        "400":
+          description: Bad Request      
+        default:
+          description: Unexpected Error  
+  /cards/{id}:
+    put:
+      operationId: updateCard
+      description: Update a Card
+      tags:
+        - UpdateCard
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: card
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateCardBase"
+      responses:
+        "200":
+          description: Card is Updated
+        "400":
+          description: Bad Request
+        default:
+          description: Unexpected Error     
+    get:
+      operationId: retrieveCard
+      description: Retrieve a Card
+      tags:
+        - RetrieveCard
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string      
+      responses:
+        "200":
+          description: Card is retrieved
+          schema:
+            $ref: "#/definitions/CardBase"
+        "400":
+          description: Bad Request
+        default:
+          description: Unexpected Error
+
+definitions:
+  CardBase:
+    type: object
+    required:
+      - name
+      - details
+    properties:
+      name:
+        type: string
+      details:
+        type: object
+  UpdateCardBase:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      details:
+        type: object        
